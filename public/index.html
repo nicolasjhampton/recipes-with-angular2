@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <base href="/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>My Recipes</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+  <!-- <link rel="stylesheet" href="styles/unsemantic-grid-responsive.css">
+  <link rel="stylesheet" href="styles/main.css"> -->
+
+<link href="app.css" rel="stylesheet"></head>
+
+<!-- TODO Add a directive to the body element in order to
+  bootstrap your Angular app. Be sure to use the name 'app'
+  so that the provided Angular routes function properly. -->
+<body>
+
+  <div class="grid-container">
+
+    <div class="grid-100">
+      <h1>
+        <img src="assets/chefbot.svg" height="60px">
+        <br>
+        My Recipes
+      </h1>
+    </div>
+
+    <div class="grid-100">
+
+      <div class="recipes">
+
+        <!-- The ng-view Angular directive is used to tell the Angular router
+              where requested views should be loaded. Removing this directive
+              will cause routing to not function properly. -->
+        <my-app></my-app>
+
+        <div class="row">&nbsp;</div>
+
+      </div>
+    </div>
+  </div>
+  <!-- <script src="scripts/polyfills.bundle.js"></script>
+  <script src="scripts/vendor.bundle.js"></script>
+  <script src="scripts/app.bundle.js"></script> -->
+<script type="text/javascript" src="scripts/polyfills.bundle.js"></script><script type="text/javascript" src="scripts/vendor.bundle.js"></script><script type="text/javascript" src="scripts/app.bundle.js"></script></body>
+
+</html>

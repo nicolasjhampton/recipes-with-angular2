@@ -1,0 +1,245 @@
+<div *ngIf="recipe">
+
+  <div class="grid-100 row controls">
+    <div (click)="editing = !editing" class="grid-50">
+      <!-- TODO Add a binding expression to display the recipe name
+        when editing a recipe. When adding a recipe, display the
+        static text 'Add New Recipe'. -->
+      <h2 *ngIf="createdNew == true">Add New Recipe</h2>
+      <h2 *ngIf="createdNew == false">Edit Recipe</h2>
+    </div>
+    <div class="grid-50">
+      <div class="flush-right">
+        <!-- TODO Add directives to both the "Save Recipe" and "Cancel"
+          buttons in order to handle user clicks. -->
+        <button (click)="save()">Save Recipe</button>
+        <button (click)="reset()" class="secondary"><span *ngIf="editing">
+          Cancel
+        </span><span *ngIf="!editing">
+          Back
+        </span></button>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <!-- TODO Add a directive to this div element so that it only displays
+     *ngIf="" when there are validation messages to display. -->
+  <div *ngIf="recipeErrors" class="grid-100 row">
+    <div class="grid-100">
+      <p><i>The following errors were found:</i></p>
+      <ul class="validation-errors">
+        <!-- TODO Add a directive to this li element so that it repeats
+          for each validation message that there is to display -->
+        <li *ngFor="let error of recipeErrors">
+          {{ error[0].userMessage }}<!-- TODO Add a binding expression to display the validation user message. -->
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div *ngIf="recipe" class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Name </label>
+      </p>
+    </div>
+    <div class="grid-40">
+      <!-- <p> -->
+        <h1 *ngIf="editing !== true">{{ recipe.name }}</h1>
+        <!-- TODO Add a directive to this input element to bind its value
+          to the recipe model's `name` property. -->
+        <input *ngIf="editing == true" [(ngModel)]="recipe.name" type="text">
+      <!-- </p> -->
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div *ngIf="recipe" class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Description </label>
+      </p>
+    </div>
+    <div class="grid-60">
+      <!-- <p> -->
+        <p *ngIf="editing !== true">{{ recipe.description }}</p>
+        <!-- TODO Add a directive to this textarea element to bind its content
+          to the recipe model's `description` property. -->
+        <textarea *ngIf="editing == true" [(ngModel)]="recipe.description"></textarea>
+      <!-- </p> -->
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div *ngIf="recipe" class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Category </label>
+      </p>
+    </div>
+    <div class="grid-30">
+      <!-- <p> -->
+        <p *ngIf="!editing">{{ recipe.category }}</p>
+        <!--TODO Add directives to this select element to bind its value
+          to the recipe model's `category` property and to populate the list
+          with the categories from the database. -->
+        <select *ngIf="editing" [ngModel]="recipe.category" (change)="recipe.category = $event.target.value">
+          <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+        </select>
+      <!-- </p> -->
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div *ngIf="recipe" class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Prep Time </label>
+      </p>
+    </div>
+    <div class="grid-20">
+      <!-- <p> -->
+        <p *ngIf="editing !== true">{{ recipe.prepTime }}</p>
+        <!-- TODO Add a directive to this input element to bind its value
+          to the recipe model's `prepTime` property. -->
+        <input [(ngModel)]="recipe.prepTime" *ngIf="editing == true" type="number">
+      <!-- </p> -->
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div *ngIf="recipe" class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Cook Time </label>
+      </p>
+    </div>
+    <div class="grid-20">
+      <!-- <p> -->
+        <p *ngIf="editing !== true">{{ recipe.cookTime }}</p>
+        <!-- TODO Add a directive to this input element to bind its value
+          to the recipe model's `cookTime` property. -->
+        <input [(ngModel)]="recipe.cookTime" *ngIf="editing == true" type="number">
+      <!-- </p> -->
+    </div>
+  </div>
+  <div class="clear"></div>
+
+
+  <div class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Ingredients </label>
+      </p>
+    </div>
+    <div class="grid-30">
+      <p class="label-spacing">
+        <label> Item </label>
+      </p>
+    </div>
+    <div class="grid-30">
+      <p class="label-spacing">
+        <label> Condition </label>
+      </p>
+    </div>
+    <div class="grid-15">
+      <p class="label-spacing">
+        <label> Amount </label>
+      </p>
+    </div>
+
+    <!-- TODO Add a directive to this div element so that it repeats
+      for each recipe ingredient to display. -->
+    <div *ngFor="let item of recipe.ingredients" class="ingredient-row">
+      <div class="prefix-20 grid-30">
+
+          <!-- TODO Add directives to this select element to bind its value
+            to the recipe ingredient model's `foodItem` property and to
+            populate the list with the food items from the database. -->
+          <p *ngIf="!editing">{{ item.foodItem }}</p>
+          <select *ngIf="editing" [ngModel]="item.foodItem" (change)="item.foodItem = $event.target.value">
+            <option *ngFor="let foodItem of foodItems" [value]="foodItem.name">{{ foodItem.name }}</option>
+          </select>
+      </div>
+      <div class="grid-30">
+
+          <!-- TODO Add a directive to this input element to bind its value
+            to the recipe ingredient model's `condition` property. -->
+            <p *ngIf="!editing">{{ item.condition }}</p>
+          <input *ngIf="editing" [(ngModel)]="item.condition" type="text">
+
+      </div>
+      <div class="grid-15">
+
+          <!-- TODO Add a directive to this input element to bind its value
+            to the recipe ingredient model's `amount` property. -->
+            <p *ngIf="!editing">{{ item.amount }}</p>
+          <input *ngIf="editing" [(ngModel)]="item.amount" type="text">
+
+      </div>
+      <div class="grid-5 pad-top">
+        <p class="flush-right">
+          <!-- TODO Add a directive to this anchor element so that you can
+            delete the recipe ingredient when the user clicks on the 'Delete' link. -->
+          <a *ngIf="editing" (click)="deleteIngredient(item)" class="no-action-link"> <img src="images/delete.svg" height="12px"> </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="prefix-20 grid-80 add-row">
+      <p>
+        <!-- TODO Add a directive to this button in order to handle
+          when the user clicks to add a new recipe ingredient. -->
+        <button (click)="addIngredient()">+ Add Another Ingredient</button>
+      </p>
+    </div>
+
+  </div>
+  <div class="clear"></div>
+
+  <div class="grid-100 row">
+    <div class="grid-20">
+      <p class="label-spacing">
+        <label> Steps </label>
+      </p>
+    </div>
+    <div class="grid-75">
+      <p class="label-spacing">
+        <label> Description </label>
+      </p>
+    </div>
+
+    <!-- TODO Add a directive to this div element so that it repeats
+      for each recipe step to display. -->
+    <div *ngFor="let step of recipe.steps" class="step-row">
+      <div class="prefix-20 grid-75">
+
+          <!-- TODO Add a directive to this input element to bind its value
+            to the recipe step model's `description` property. -->
+          <p *ngIf="!editing">{{ step.description }}</p>
+          <input *ngIf="editing" [(ngModel)]="step.description" type="text">
+
+      </div>
+      <div class="grid-5 pad-top">
+        <p class="flush-right">
+          <!-- TODO Add a directive to this anchor element so that you can
+            delete the recipe step when the user clicks on the 'Delete' link. -->
+          <a *ngIf="editing" (click)="deleteStep(step)" class="no-action-link"> <img src="images/delete.svg" height="12px"> </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="prefix-20 grid-80 add-row">
+      <p>
+       <!-- TODO Add a directive to this button in order to handle
+         when the user clicks to add a new recipe step. -->
+       <button (click)="addStep()">+ Add Another Step</button>
+      </p>
+    </div>
+
+  </div>
+  <div class="clear"></div>
+
+</div>
